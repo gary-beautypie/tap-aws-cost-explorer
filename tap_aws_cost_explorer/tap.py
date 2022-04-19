@@ -39,6 +39,7 @@ class TapAWSCostExplorer(Tap):
         th.Property(
             "end_date",
             th.StringType,
+            Optional=True,
             description="The end date for retrieving Amazon Web Services cost."
         ),
         th.Property(
