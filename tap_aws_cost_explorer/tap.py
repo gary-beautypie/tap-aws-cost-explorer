@@ -1,5 +1,6 @@
 """AWSCostExplorer tap class."""
 
+import datetime
 from typing import List
 
 from singer_sdk import Tap, Stream
@@ -39,6 +40,7 @@ class TapAWSCostExplorer(Tap):
         th.Property(
             "end_date",
             th.StringType,
+            default=(datetime.date.today() - datetime.timedelta(days=1)).strftime("%Y-%m-%d"),
             description="The end date for retrieving Amazon Web Services cost."
         ),
         th.Property(
