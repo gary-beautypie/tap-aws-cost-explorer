@@ -1,6 +1,5 @@
 """Stream type classes for tap-aws-cost-explorer."""
 
-import datetime
 from pathlib import Path
 from typing import Optional, Iterable
 
@@ -25,14 +24,13 @@ class CostAndUsageWithResourcesStream(AWSCostExplorerStream):
 
     def get_records(self, context: Optional[dict]) -> Iterable[dict]:
         """Return a generator of row-type dictionary objects."""
-        yesterday = datetime.date.today() - datetime.timedelta(days=1)
         next_page = True
 
         while next_page:
             response = self.conn.get_cost_and_usage(
                 TimePeriod={
                     'Start': self.config.get("start_date"),
-                    'End': self.config.get("end_date", yesterday.strftime("%Y-%m-%d"))
+                    'End': self.config.get("end_date")
                 },
                 Granularity=self.config.get("granularity"),
                 Metrics=self.config.get("metrics"),
